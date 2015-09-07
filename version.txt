@@ -1,0 +1,3 @@
+version = $WCREV$
+status = '$WCMODS?Modified:Not modified$'
+date = '$WCDATE$'
