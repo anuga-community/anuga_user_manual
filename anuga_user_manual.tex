@@ -2519,7 +2519,7 @@ x, y = domain.get_maximum_inundation_location()
 
 
 %=================================
-\chapter{Initial Conditions}\index{Initial Conditions}
+\chapter{Initial Conditions and set_quantity}\index{Initial Conditions}\index{set_quantity}
 \label{sec:initial conditions}
 
 In standard usage of partial differential equations, initial conditions
@@ -2788,7 +2788,7 @@ where \code{id} is an index for the list \code{interpolation_points}.
 
 %=================================
 
-\chapter{Boundary Conditions}\index{boundary conditions}
+\chapter{Boundary Conditions and set_boundary}\index{boundary conditions}
 \label{sec:boundary conditions}
 
 \anuga provides a large number of predefined boundary conditions,
@@ -2819,6 +2819,10 @@ Returns a list of the available boundary tags.
 %----------------------------------------------------------
 \section{Predefined boundary conditions}
 
+
+\subsection{Reflective Boundary}
+
+
 \begin{classdesc}{Reflective_boundary}{domain=None}
 Module: \module{shallow_water}
 
@@ -2829,15 +2833,8 @@ This class is specific to the shallow water equation as it works with the
 momentum quantities assumed to be the second and third conserved quantities.
 \end{classdesc}
 
-\begin{classdesc}{Transmissive_boundary}{domain=None}
-  \label{pg: transmissive boundary}
-Module: \module{abstract_2d_finite_volumes.generic_boundary_conditions}
 
-A transmissive boundary returns the same conserved quantities as
-those present in the neighbouring volume.
-
-The underlying domain must be specified when the boundary is instantiated.
-\end{classdesc}
+\subsection{Boundaries that set specific quantity values}
 
 \begin{classdesc}{Dirichlet_boundary}{conserved_quantities=None}
 Module: \module{abstract_2d_finite_volumes.generic_boundary_conditions}
@@ -2848,6 +2845,9 @@ the \code{stage} value at the boundary is 0.2 and the \code{xmomentum} and
 \code{ymomentum} at the boundary are set to 0.0. The list must contain
 a value for each conserved quantity.
 \end{classdesc}
+
+
+
 
 \begin{classdesc}{Time_boundary}{domain=None,
                                  function=None,
@@ -2863,27 +2863,6 @@ Optional argument \code{default_boundary} can be used to specify another boundar
 to be used in case model time exceeds the time available in the file used by \code{File_boundary}.
 The \code{default_boundary} could be a simple Dirichlet condition or
 even another \code{Time_boundary} typically using data pertaining to another time interval.
-\end{classdesc}
-
-\begin{classdesc}{File_boundary}{filename,
-                                 domain,
-                                 time_thinning=1,
-                                 time_limit=None,
-                                 boundary_polygon=None,
-                                 default_boundary=None,
-                                 use_cache=False,
-                                 verbose=False}
-Module: \module{abstract_2d_finite_volumes.generic_boundary_conditions}
-
-This method may be used if the user wishes to apply a SWW file, STS file or
-a time series file (TMS) to a boundary segment or segments.
-The boundary values are obtained from a file and interpolated to the
-appropriate segments for each conserved quantity.
-
-Optional argument \code{default_boundary} can be used to specify another boundary object
-to be used in case model time exceeds the time available in the file used by \code{File_boundary}.
-The \code{default_boundary} could be a simple Dirichlet condition or
-even another \code{File_boundary} typically using data pertaining to another time interval.
 \end{classdesc}
 
 \begin{classdesc}{Field_boundary}{filename,
@@ -2913,6 +2892,20 @@ obtained from the file.
 
 See \code{File_boundary} for further details.
 \end{classdesc}
+
+
+\subsection{Transmissive Boundaries}
+
+\begin{classdesc}{Transmissive_boundary}{domain=None}
+  \label{pg: transmissive boundary}
+Module: \module{abstract_2d_finite_volumes.generic_boundary_conditions}
+
+A transmissive boundary returns the same conserved quantities as
+those present in the neighbouring volume.
+
+The underlying domain must be specified when the boundary is instantiated.
+\end{classdesc}
+
 
 \begin{classdesc}{Transmissive_momentum_set_stage_boundary}{domain=None,
                                                             function=None}
@@ -2982,7 +2975,7 @@ for examples of how to implement boundary conditions.
 
 
 %=================================
-\chapter{Operators and Structures}\index{operators}\index{structures}
+\chapter{Operators and Structures, Erosion and Culverts}\index{operators}\index{structures}\index{culverts}\index{erosion}
 \label{sec:operators}
 
 A way to effect the evolution is via fractional step \code{operators}.  The idea is that at each inner timestep we can use 
