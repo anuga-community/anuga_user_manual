@@ -65,7 +65,7 @@
 % Please at least include a long-lived email address;
 % the rest is at your discretion.
 \authoraddress{Geoscience Australia \\
-  Email: \email{anuga@ga.gov.au}
+  Email: \email{anuga-user@lists.sourceforge.net}
 }
 
 %Draft date
@@ -3072,7 +3072,7 @@ culvert = anuga.Boyd_box_operator(domain,
     losses=losses, 
     width=1.5, 
     height=1.5, 
-    end_points=[ep0, ep1], 
+    exchange_lines=[el0,el1],
     use_momentum_jet=True, #False to switch it off
     use_velocity_head=True, #False to switch it off
     manning=0.013, #culvert manning's n
