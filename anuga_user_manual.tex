@@ -31,7 +31,7 @@
 \newcommand{\verbatiminputB}[1]{%
 \verbatiminput{#1}\endgroup}
 
-\def\verbatiminputunderscore{\begingroup 
+\def\verbatiminputunderscore{\begingroup
 \catcode`\_=12
 \verbatiminputB}
 
@@ -128,7 +128,7 @@ as riverine flooding, storm surges and tsunami.
 The user must specify a study area represented by a mesh of triangular
 cells, the topography and bathymetry, frictional resistance, initial
 values for water level (called \emph{stage}\index{stage} within \anuga),
-boundary conditions and operators such as rainfall, 
+boundary conditions and operators such as rainfall,
 stream flows, windstress or pressure gradients if applicable.
 
 \anuga tracks the evolution of water depth and horizontal momentum
@@ -161,10 +161,10 @@ The purpose of this user manual is to introduce the new user to the
 inundation software system, describe what it can do and give step-by-step
 instructions for setting up and running hydrodynamic simulations.
 The stable releases of \anuga and this manual are available on github at
-\url{http://github.com/GeoscienceAustralia/anuga_core/releases}. 
+\url{http://github.com/GeoscienceAustralia/anuga_core/releases}.
 
-A snapshot of the current work in progress is at  
-\url{http://github.com/GeoscienceAustralia/anuga_core}. 
+A snapshot of the current work in progress is at
+\url{http://github.com/GeoscienceAustralia/anuga_core}.
 
 This manual describes \anuga version \version. To check for later versions of this manual
 go to \url{http://github.com/GeoscienceAustralia/anuga_core/doc/anuga_user_manual.pdf}.
@@ -215,7 +215,7 @@ wetting and drying as water enters and leaves an area.  This means
 that it is suitable for simulating water flow onto a beach or dry land
 and around structures such as buildings.  \anuga is also capable
 of modelling hydraulic jumps due to the ability of the finite-volume
-method to accommodate discontinuities in the solution and the bed (using the 
+method to accommodate discontinuities in the solution and the bed (using the
 latest algorithms (see section~\ref{ch:algorithm})
 
 To set up a particular scenario the user specifies the geometry
@@ -236,7 +236,7 @@ language Python.  Software written in Python can be produced quickly
 and can be readily adapted to changing requirements throughout its
 lifetime.  Computationally intensive components are written for
 efficiency in C routines working directly with Python numpy
-structures.  
+structures.
 
 The visualisation tool developed for \anuga is based on
 OpenSceneGraph, an Open Source Software (OSS) component allowing high
@@ -244,15 +244,15 @@ level interaction with sophisticated graphics primitives.
 See \cite{nielsen2005} for more background on \anuga.
 
 
- 
+
 \section{Which flow algorithm}
 \label{ch:algorithm}
 
-Up to version \verb|2.0| our default flow algorithm assumed  a continuous 
+Up to version \verb|2.0| our default flow algorithm assumed  a continuous
 bed. This allowed allowed for a robust algorithm, but did lead to complications
-associated with well balancing and the introduction of useful structures such as riverwalls. 
+associated with well balancing and the introduction of useful structures such as riverwalls.
 
-Form version \verb|1.3| we have made available flow algorithms which can use 
+Form version \verb|1.3| we have made available flow algorithms which can use
 discontinuous bed and have introduced riverwalls for those algorithms. In addition,
 for those algorithms, it has been much easier to deal with operations that change the bed (such as erosion).
 
@@ -263,21 +263,21 @@ domain.set_flow_algorithm('alg')
 where \verb|alg| is one of the following:
 \begin{center}
 \begin{tabular}{| l |p{6cm}  |p{6cm}| }
-  \hline \hline      
-  \verb|alg| & Description & Comments \\ \hline                  
-  \verb|DE0| & Uses first order timestepping and a fairly diffusive second order spatial approximation. & Very robust, more accuate than \verb|1_5|. This is our default algorithm since version \verb|2.0|. Useful for standard flow problems and tsunamis. \\ \hline 
-   \verb|DE1| & Uses second order timestepping and a much less diffusive second order spatial approximation.  &More accurate than, but about 1/2 the speed of \verb|DE0|. Useful for problems with forced waves or tidal flows over many tidal cycles. \\ \hline 
-   \verb|DE2| & Uses third order timestepping and the same spatial approximation as \verb|DE1| & Slightly more accurate than \verb|DE1|. About 1/3 the speed of \verb|DE0|. \\ \hline 
-  \hline 
-  \verb|1_5| &  Uses first order timestepping and similar spatial approximation to \verb|DE0|. & Very  robust, slighty fast than \verb|DE0|. The default algorithm before version \verb|2.0|. \\ \hline 
-   \verb|2_0| & Uses second order timestepping and similar spatial approximation to \verb|DE1|.  &More accurate than, but  about 1/2 the speed of \verb|1_5| \\ \hline 
-   \verb|2_5| & uses third order timestepping  and similar spatial approximation to \verb|DE1| . & Slightly more accurate than \verb|2_0|.  About 1/3 the speed of \verb|2_0|.\\    \hline 
+  \hline \hline
+  \verb|alg| & Description & Comments \\ \hline
+  \verb|DE0| & Uses first order timestepping and a fairly diffusive second order spatial approximation. & Very robust, more accuate than \verb|1_5|. This is our default algorithm since version \verb|2.0|. Useful for standard flow problems and tsunamis. \\ \hline
+   \verb|DE1| & Uses second order timestepping and a much less diffusive second order spatial approximation.  &More accurate than, but about 1/2 the speed of \verb|DE0|. Useful for problems with forced waves or tidal flows over many tidal cycles. \\ \hline
+   \verb|DE2| & Uses third order timestepping and the same spatial approximation as \verb|DE1| & Slightly more accurate than \verb|DE1|. About 1/3 the speed of \verb|DE0|. \\ \hline
+  \hline
+  \verb|1_5| &  Uses first order timestepping and similar spatial approximation to \verb|DE0|. & Very  robust, slighty fast than \verb|DE0|. The default algorithm before version \verb|2.0|. \\ \hline
+   \verb|2_0| & Uses second order timestepping and similar spatial approximation to \verb|DE1|.  &More accurate than, but  about 1/2 the speed of \verb|1_5| \\ \hline
+   \verb|2_5| & uses third order timestepping  and similar spatial approximation to \verb|DE1| . & Slightly more accurate than \verb|2_0|.  About 1/3 the speed of \verb|2_0|.\\    \hline
      \hline
 \end{tabular}
 \end{center}
 
-From version \verb|2.0| the default algorithm is \verb|DE0|. Usually there is no need to change from the default algorithm. 
- 
+From version \verb|2.0| the default algorithm is \verb|DE0|. Usually there is no need to change from the default algorithm.
+
 
 
 \section{Restrictions and limitations on \anuga}
@@ -294,7 +294,7 @@ number of limitations that any potential user needs to be aware of. They are:
   %flow under ceilings or in pipes
   \item All spatial coordinates are assumed to be UTM (meters). As such,
   \anuga is unsuitable for modelling flows in areas larger than one UTM zone
-  (6 degrees wide), though we have run over 2 zones by projecting onto one zone and 
+  (6 degrees wide), though we have run over 2 zones by projecting onto one zone and
   living with the distortion.
   \item Fluid is assumed to be inviscid -- i.e.\ no kinematic viscosity included.
   \item The finite volume is a very robust and flexible numerical technique,
@@ -339,8 +339,8 @@ Bibtex entry:
 %=====================================
 \section{Installation}
 
-We suggest visiting the page \url{anuga.anu.edu.au} or \url{https://github.com/GeoscienceAustralia/anuga_core/blob/master/INSTALL.rst} to find up to date  instructions on installing \anuga{} 
-on Ubuntu and Windows. 
+We suggest visiting the page \url{anuga.anu.edu.au} or \url{https://github.com/GeoscienceAustralia/anuga_core/blob/master/INSTALL.rst} to find up to date  instructions on installing \anuga{}
+on Ubuntu and Windows.
 
 
 
@@ -361,7 +361,7 @@ the second is a more realistic example.
 \label{sec:simpleexample}
 
 What follows is a discussion of the structure and operation of a
-script called \file{runup.py} (which is available in the \file{examples} 
+script called \file{runup.py} (which is available in the \file{examples}
 directory of \file{anuga_core}.
 
 This example carries out the solution of the shallow-water wave
@@ -423,8 +423,8 @@ significance.
 
 \section{Establishing the Domain}\index{domain, establishing}
 
-The very first thing to do is import the various modules, of which the 
-\anuga{} module is the most important. 
+The very first thing to do is import the various modules, of which the
+\anuga{} module is the most important.
 %
 \begin{verbatim}
 import anuga
@@ -434,12 +434,12 @@ Then we need to set up the triangular mesh to be used for the
 scenario. This is carried out through the statement:
 
 \begin{verbatim}
-domain = anuga.rectangular_cross_domain(10, 5, len1=10.0, len2=5.0) 
+domain = anuga.rectangular_cross_domain(10, 5, len1=10.0, len2=5.0)
 \end{verbatim}
 %
 The above assignment sets up a $10 \times
 5$ rectangular mesh, triangulated in a regular way with boundary tags \code{'left'}, \code{'right'},
-         \code{'top'} or \code{'bottom'}. 
+         \code{'top'} or \code{'bottom'}.
 
 It is also possible to set up a domain from ``first principles'' using \code{points}, \code{vertices} and \code{boundary} via the assignment:
 \begin{verbatim}
@@ -450,10 +450,10 @@ where
    \item a list \code{points} giving the coordinates of each mesh point,
    \item a list \code{vertices} specifying the three vertices of each triangle, and
    \item a dictionary \code{boundary} that stores the edges on
-         the boundary and associates with each a symbolic tag. 
-         The edges are represented as pairs (i, j) where i refers 
-         to the triangle id and j to the edge id of that triangle. 
-         Edge ids are enumerated from 0 to 2 based on the id of the vertex opposite. 
+         the boundary and associates with each a symbolic tag.
+         The edges are represented as pairs (i, j) where i refers
+         to the triangle id and j to the edge id of that triangle.
+         Edge ids are enumerated from 0 to 2 based on the id of the vertex opposite.
 \end{itemize}
 
 (For more details on symbolic tags, see page
@@ -477,7 +477,7 @@ domain.set_datadir('.')
 
 In addition, the following statement could be used to state that
 quantities \code{stage}, \code{xmomentum} and \code{ymomentum} are
-to be stored at every timestep and \code{elevation} only once at 
+to be stored at every timestep and \code{elevation} only once at
 the beginning of the simulation:
 
 \begin{verbatim}
@@ -610,14 +610,14 @@ follows:
           Specific to the shallow water equation as it works with the
           momentum quantities assumed to be the second and third conserved
           quantities. A reflective boundary condition models a solid wall.
-    \item \textbf{Transmissive boundary}\label{def:transmissive boundary} 
+    \item \textbf{Transmissive boundary}\label{def:transmissive boundary}
           Returns same conserved quantities as
           those present in its neighbour volume. This is one way of modelling
           outflow from a domain, but it should be used with caution if flow is
           not steady state as replication of momentum at the boundary
-          may cause numerical instabilities propagating into the domain and 
+          may cause numerical instabilities propagating into the domain and
           eventually causing \anuga to crash. If this occurs,
-          consider using e.g.\ a Dirichlet boundary condition with a stage value 
+          consider using e.g.\ a Dirichlet boundary condition with a stage value
           less than the elevation at the boundary.
     \item \textbf{Dirichlet boundary}\label{def:dirichlet boundary} Specifies
           constant values for stage, $x$-momentum and $y$-momentum at the boundary.
@@ -701,13 +701,13 @@ and \code{Bw}, the three arguments in each case represent the
 \code{stage}, $x$-momentum and $y$-momentum, respectively.)
 
 \begin{verbatim}
-Bw = anuga.Time_boundary(domain=domain, 
+Bw = anuga.Time_boundary(domain=domain,
 f=lambda t: [(0.1*sin(t*2*pi)-0.3), 0.0, 0.0])
 \end{verbatim}
 
 \section{Evolution}\index{evolution}
 
-The final statement: 
+The final statement:
 
 \begin{verbatim}
 for t in domain.evolve(yieldstep=0.1, duration=10.0):
@@ -814,13 +814,13 @@ given above, discussing each major step of the code in turn.
 
 \section{Establishing the Mesh}\index{mesh, establishing}
 
-In this example we use a similar simple structured triangular mesh 
+In this example we use a similar simple structured triangular mesh
 as in \file{runup.py}
 for simplicity, but this time we will use a symmetric one and also
 change the physical extent of the domain. The assignment:
 
 \begin{verbatim}
-points, vertices, boundary = anuga.rectangular_cross(m, n, 
+points, vertices, boundary = anuga.rectangular_cross(m, n,
                                                      len1=length, len2=width)
 \end{verbatim}
 
@@ -837,7 +837,7 @@ length = 10.0
 width = 5.0
 dx = dy = 1           # Resolution: Length of subdivisions on both axes
 
-points, vertices, boundary = anuga.rectangular_cross(int(length/dx), 
+points, vertices, boundary = anuga.rectangular_cross(int(length/dx),
                                    int(width/dy), len1=length, len2=width)
 \end{verbatim}
 
@@ -1157,7 +1157,7 @@ Make sure points on polygons are spaced to be no closer than the smallest resolu
 
 \section{Initialising the Domain}
 
-Since we used \code{create_domain_from_regions} to create the mesh file, we do not need to 
+Since we used \code{create_domain_from_regions} to create the mesh file, we do not need to
 create the domain explicitly, as the above function does both mesh and domain creation.
 
 The following statements specify a basename and data directory, and
@@ -1250,7 +1250,7 @@ Bs = anuga.Transmissive_stage_zero_momentum_boundary(domain) # Neutral boundary
 if project.scenario == 'fixed_wave':
     # Huge 50m wave starting after 60 seconds and lasting 1 hour.
     Bw = anuga.Transmissive_n_momentum_zero_t_momentum_set_stage_boundary(
-                        domain=domain, 
+                        domain=domain,
                         function=lambda t: [(60<t<3660)*50, 0, 0])
     domain.set_boundary({'ocean_east': Bw,
                          'bottom': Bs,
@@ -1435,19 +1435,19 @@ Airport in Figure \ref{fig:airportboth}.
 
 \section{Overview}
 
-We have a large suite of validation tests (available from the \module{validation_tests} directory). From the individual directories, the tests can be run and a report produced, by running the \code{produce_results.py} script. These scripts take command line options. For instance 
+We have a large suite of validation tests (available from the \module{validation_tests} directory). From the individual directories, the tests can be run and a report produced, by running the \code{produce_results.py} script. These scripts take command line options. For instance
 
 \code{python produce_results.py -v -np 6}
 
-will run the tests in verbose mode (produces output) and in parallel using 6 processors (if parallel version of anuga has been setup). 
+will run the tests in verbose mode (produces output) and in parallel using 6 processors (if parallel version of anuga has been setup).
 
-A subset of these validation tests can be run using \code{run_validations.py} from the \module{anuga_core} directory. 
+A subset of these validation tests can be run using \code{run_validations.py} from the \module{anuga_core} directory.
 
 
 The validation tests are organised into a number of directories as follows:
 
 \begin{itemize}
-\item \textbf{analytical\_exact}: Extensive suite of tests against analytical solutions of the shallow water wave equations. 
+\item \textbf{analytical\_exact}: Extensive suite of tests against analytical solutions of the shallow water wave equations.
 
 \item \textbf{behaviour\_only}: Tests against expected ``engineering'' results.
 
@@ -1455,15 +1455,15 @@ The validation tests are organised into a number of directories as follows:
 
 \item \textbf{experimental\_data}: Simulations of experimental setups. Usually tested against measured data.
 
-\item \textbf{other\_references}: Simulations tested against other simulations. 
+\item \textbf{other\_references}: Simulations tested against other simulations.
 \end{itemize}
 
 
 \section{Analytical\_exact}
 
-As an example, the code in the 
-directory \module{validation_tests/analytical_exact} consider the code in the directory \code{dam_break_dry}. This code tests \anuga against the standard analytical solution of the 
-dam break problem. For instance Figure~\ref{fig:dam_break_stage} shows the stage obtained at various times when running this validation test (using the \code{DE0} algorithm). 
+As an example, the code in the
+directory \module{validation_tests/analytical_exact} consider the code in the directory \code{dam_break_dry}. This code tests \anuga against the standard analytical solution of the
+dam break problem. For instance Figure~\ref{fig:dam_break_stage} shows the stage obtained at various times when running this validation test (using the \code{DE0} algorithm).
 
 \begin{figure}[htp]
   \centerline{\includegraphics[width=75mm, height=75mm]
@@ -1487,10 +1487,10 @@ Many of the tests in this directory compare the \anuga results against the hydro
 
 \section{Case\_studies}
 
-These are generlly very long running simulations but are typical of real world case studies. The case study \code{patong} considers a tsunami case study, where as \code{merewether} and \code{towradgi} look at flood models.  \code{merewether} is a short  simulation (30mins), 
-where as \code{patong} and especially \code{towradgi} will take many 10s of hours to run (consider running in parallel). 
+These are generlly very long running simulations but are typical of real world case studies. The case study \code{patong} considers a tsunami case study, where as \code{merewether} and \code{towradgi} look at flood models.  \code{merewether} is a short  simulation (30mins),
+where as \code{patong} and especially \code{towradgi} will take many 10s of hours to run (consider running in parallel).
 
-Figure\ref{fig:towradgi:pioneer} showing comparison of observed flood height and \anuga modelled flood height, near the Pioneer bridge. 
+Figure\ref{fig:towradgi:pioneer} showing comparison of observed flood height and \anuga modelled flood height, near the Pioneer bridge.
 
 \begin{figure}[htp]
   \centerline{\includegraphics[width=75mm, height=75mm]
@@ -1503,7 +1503,7 @@ Figure\ref{fig:towradgi:pioneer} showing comparison of observed flood height and
 \section{Experimental\_data}
 
 This directory contains models in which we have experimental data to validation against. At present we have two studies, \code{dam_break_yeh_petroff} and \code{okushiri}.
- 
+
 Figure\ref{fig:yeh:petroff:force} showing comparison of experimentally measured and modelled force on a column  in a simulated dam break situation as modelled in directory \code{experimental_data/dam_break_yeh_petroff}
 
 \begin{figure}[htp]
@@ -1515,7 +1515,7 @@ Figure\ref{fig:yeh:petroff:force} showing comparison of experimentally measured 
 
 \section{Other\_references}
 
-Here we are collecting situations where we can compare with other published results. For instance in the directory we present comparison of a 2d \anuga simulation of a circular dam break against a 1d shallow water simulation. Figure~\ref{fig:circular:dam} 
+Here we are collecting situations where we can compare with other published results. For instance in the directory we present comparison of a 2d \anuga simulation of a circular dam break against a 1d shallow water simulation. Figure~\ref{fig:circular:dam}
 
 
 \begin{figure}[htp]
@@ -1703,7 +1703,7 @@ This can be used  to represent buildings, pylons and other immovable
 structures. These polygons do not need to be closed, but their points must be
 specified in a counter-clockwise order.(new in 1.2)
 
-\code{mesh_filename} is the name of the file to contain the generated 
+\code{mesh_filename} is the name of the file to contain the generated
 mesh data.
 
 \code{interior_regions} is a list of tuples consisting of (polygon,
@@ -1825,7 +1825,7 @@ Module: \module{pmesh.mesh}
 
 This method adds a region to a mesh outline.
 
-\code{x} and \code{y} define a point on the already-defined region that is to 
+\code{x} and \code{y} define a point on the already-defined region that is to
 be added to the mesh.
 
 If \code{geo_reference} is not supplied the points data is assumed to be absolute.
@@ -1964,7 +1964,7 @@ This function can be used to import building footprints.
 Module: \refmodule{abstract_2d_finite_volumes.domain}
 
 This class isused to
-store and manipulate data associated with a mesh and to setup the particulars for 
+store and manipulate data associated with a mesh and to setup the particulars for
 the evolution of the specific problem. The mesh is
 specified either by assigning the name of a mesh file to
 \code{source} or by specifying the points, triangle and boundary of the
@@ -2102,10 +2102,10 @@ Storing one way or the other is controlled in \anuga through the method
   SWW files.
 \end{itemize}
 
-Note that when model data in the SWW file are averaged (i.e.\ not stored uniquely), 
-then there will most likely be a small discrepancy between values extracted from the SWW 
+Note that when model data in the SWW file are averaged (i.e.\ not stored uniquely),
+then there will most likely be a small discrepancy between values extracted from the SWW
 file and the same data stored in the model domain. This must be borne in mind when comparing
-data from the SWW files with that of the model internally. 
+data from the SWW files with that of the model internally.
 \end{methoddesc}
 
 
@@ -2115,16 +2115,16 @@ Module: \module{shallow_water.shallow_water_domain}
 Selects quantities that is to be stored in the sww files.
 The argument can be None, in which case nothing is stored.
 
-Otherwise, the argument must be a dictionary where the keys are names of quantities 
-already defined within ANUGA and the values are either 1 or 2. If the value is 1, the quantity 
-will be stored once at the beginning of the simulation, if the value is 2 it will be stored 
+Otherwise, the argument must be a dictionary where the keys are names of quantities
+already defined within ANUGA and the values are either 1 or 2. If the value is 1, the quantity
+will be stored once at the beginning of the simulation, if the value is 2 it will be stored
 at each timestep. The ANUGA default is equivalent to the call
-\begin{verbatim} 
+\begin{verbatim}
 domain.set_quantities_to_be_stored({'elevation': 1,
-                                    'stage': 2, 
-                                    'xmomentum': 2, 
+                                    'stage': 2,
+                                    'xmomentum': 2,
                                     'ymomentum': 2})
-\end{verbatim} 
+\end{verbatim}
 \end{methoddesc}
 
 
@@ -2158,7 +2158,7 @@ Default is \code{False} as many parts of \anuga expect relative coordinates.
 Module: \module{abstract_2d_finite_volumes.domain}
 
 Return centroid coordinates for all triangles as an \code{Mx2} array.
-    
+
 \code{absolute} is a boolean which determines whether coordinates
 are to be made absolute by taking georeference into account.
 Default is \code{False} as many parts of \anuga expect relative coordinates.
@@ -2221,7 +2221,7 @@ outputting statistics whenever a user-specified period
 \code{yieldstep} is completed.  Generally during this period the
 model will evolve through several steps internally
 as the method forces the water speed to be calculated
-on successive new cells. 
+on successive new cells.
 
 \code{yieldstep} is the interval in seconds between yields where results are
 stored, statistics written and the domain is inspected or possibly modified.
@@ -2239,7 +2239,7 @@ yield step is skipped or not. This is useful for example to avoid
 duplicate steps when multiple evolve processes are dove tailed.
 
 The code specified by the user in the block following the evolve statement is
-only executed once every \code{yieldstep} even though 
+only executed once every \code{yieldstep} even though
 \anuga typically will take many more internal steps behind the scenes.
 
 You can include \method{evolve} in a statement of the type:
@@ -2390,7 +2390,7 @@ Extract values for quantity as a numeric array.
 sought (using interpolation). If \code{interpolation_points} is given, values
 for \code{location} and \code{indices} are ignored.
 Assume either an absolute UTM coordinates or geospatial data object.
-    
+
 \code{location} specifies where values are to be stored.
 Permissible options are 'vertices', 'edges', 'centroids' or 'unique vertices'.
 
@@ -2400,14 +2400,14 @@ N (all values) if \code{indices} is \code{None}.
 If \code{location} is 'centroids' the dimension of returned
 values will be a list or a numeric array of length N, N being
 the number of elements.
-      
+
 If \code{location} is 'vertices' or 'edges' the dimension of
 returned values will be of dimension \code{Nx3}.
 
 If \code{location} is 'unique vertices' the average value at
 each vertex will be returned and the dimension of returned values
-will be a 1d array of length "number of vertices" 
-      
+will be a 1d array of length "number of vertices"
+
 \code{indices} is the set of element ids that the operation applies to.
 
 The values will be stored in elements following their internal ordering.
@@ -2619,13 +2619,13 @@ domain. It has the same syntax as \code{\emph{<domain>}.set_quantity(name, x)}.
 
 A typical use of this function is to add structures to an existing elevation model:
 
-\begin{verbatim} 
+\begin{verbatim}
 # Create digital elevation model from points file
 domain.set_quantity('elevation', filename=
                                  'elevation_file.pts', verbose=True)
 
 # Add buildings from file
-building_polygons, building_heights = 
+building_polygons, building_heights =
                   anuga.load_csv_as_building_polygons(building_file)
 
 B = []
@@ -2696,15 +2696,15 @@ Reads the time history of spatial data for specified interpolation points from
 a NetCDF file and returns a callable object.  Values returned from the \code{\emph{<callable_object>}}
 are interpolated values based on the input file using the underlying \code{interpolation_function}.
 
-\code{filename} is the name of the input file.  
+\code{filename} is the name of the input file.
 This would be either an SWW, TMS or STS file.
 
 \code{quantities} is either the name of a single quantity to be
 interpolated or a list of such quantity names. In the second case, the resulting
 function will return a tuple of values -- one for each quantity.
 If the NetCDF file uses names other than 'stage', 'xmomentum', and 'ymomentum'
-the name(s) appearing in the file must be explicitly stated using the 
-quantities keyword. This is for example be the case if a 'tms' file is used 
+the name(s) appearing in the file must be explicitly stated using the
+quantities keyword. This is for example be the case if a 'tms' file is used
 to specify time dependent precipitation. In this case the keyword might be called 'rainfall' both in the call to file\_function and in the 'tms' file.
 
 \code{interpolation_points} is a list of absolute coordinates or a
@@ -2924,7 +2924,7 @@ momentum quantities assumed to be the second and third conserved quantities.
 
 In some circumstances, this boundary condition may cause numerical instabilities for similar
 reasons as what has been observed with the simple fully transmissive boundary condition
-(see Page \pageref{pg: transmissive boundary}). 
+(see Page \pageref{pg: transmissive boundary}).
 This could for example be the case if a planar wave is reflected out through this boundary.
 \end{classdesc}
 
@@ -2944,7 +2944,7 @@ to the coast to maintain the wave height of the incoming wave.
 This class is specific to the shallow water equation as it works with the
 momentum quantities assumed to be the second and third conserved quantities.
 
-This boundary condition should not cause the numerical instabilities seen with the transmissive momentum 
+This boundary condition should not cause the numerical instabilities seen with the transmissive momentum
 boundary conditions (see Page \pageref{pg: transmissive boundary} and
 Page \pageref{pg: transmissive momentum set stage boundary}).
 \end{classdesc}
@@ -2978,11 +2978,11 @@ for examples of how to implement boundary conditions.
 \chapter{Operators and Structures, Erosion and Culverts}\index{operators}\index{structures}\index{culverts}\index{erosion}
 \label{sec:operators}
 
-A way to effect the evolution is via fractional step \code{operators}.  The idea is that at each inner timestep we can use 
+A way to effect the evolution is via fractional step \code{operators}.  The idea is that at each inner timestep we can use
 an \code{operator} to change the centroid values of quantities such as the stage and the xmomentum and the ymomentum. T
 
-If you are using one of the older flow argorithms then the elevation can also be changed but more care needs to be applied as the \code{elevation} quantity needs to remain continuous. 
-The moral, play with \code{elevation} at your peril if using the old algorithms. 
+If you are using one of the older flow argorithms then the elevation can also be changed but more care needs to be applied as the \code{elevation} quantity needs to remain continuous.
+The moral, play with \code{elevation} at your peril if using the old algorithms.
 
 The newer algorithms (check that you are using discontinuous elevation with the domain member function \code{<domain>.get_using_discontinuous_elevation()}
 
@@ -3020,9 +3020,9 @@ Set the elevation in a region (careful to maintain continuity of elevation)
 
 \code{label} is the label used when reporting on the operator.
 
-\code{logging} is the boolean flag to set logging to a file. 
+\code{logging} is the boolean flag to set logging to a file.
 
-\code{verbose} is the boolean flag to setup extended output from the operator. 
+\code{verbose} is the boolean flag to setup extended output from the operator.
 
 Example:
 
@@ -3032,9 +3032,9 @@ op0 = anuga.Set_elevation_operator(domain, elevation = lambda t : 0.01*t)
 would setup an operator which raises the elevation over the whole domain 1 cm per second.
 
 
-While 
+While
 \begin{verbatim}
-P = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]] 
+P = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]]
 
 op0 = anuga.Set_elevation_operator(domain, \
                        elevation = lambda t : 0.01*t, polygon=P)
@@ -3054,7 +3054,7 @@ Usage
 
 In \anuga, a culvert can be modelled as two points (an inlet point and an outlet point) or along two lines (and inlet line and an outlet line) to account for skew.
 
-The user needs to nominate the location of the culvert inlet and outlet, any culvert losses (i.e. inlet, outlet, bends etc) and the culvert dimensions (in metres). 
+The user needs to nominate the location of the culvert inlet and outlet, any culvert losses (i.e. inlet, outlet, bends etc) and the culvert dimensions (in metres).
 
 The user can also model the effects of momentum jetting at the outlet of the culvert and also account for velocity head of the flow at the inlet for more realistic results.
 
@@ -3063,41 +3063,41 @@ Culvert hydraulics information can be logged by switching logging on or off.
 To use the Boyd Method in \anuga, the user can just copy the code below into their script. So if your model run has five pipe culverts, copy the pipe culvert routine five times into your run script and fill in the details for each of your five culverts.
 \begin{verbatim}
 #------------------------------------- -----------------
-# Box Culvert modelled along two lines 
+# Box Culvert modelled along two lines
 #------------------------------------- -----------------
-losses = {'inlet':0.5, 'outlet':1.0, 'bend':0.0, 'grate':0.0, 'pier': 0.0, 'other': 0.0} 
-el0 = numpy.array([[297750.2,6181379.1], [297753.5,6181380.9]]) 
-el1 = numpy.array([[297731.8,6181416.4], [297735.1,6181418.3]])  
-culvert = anuga.Boyd_box_operator(domain, 
-    losses=losses, 
-    width=1.5, 
-    height=1.5, 
+losses = {'inlet':0.5, 'outlet':1.0, 'bend':0.0, 'grate':0.0, 'pier': 0.0, 'other': 0.0}
+el0 = numpy.array([[297750.2,6181379.1], [297753.5,6181380.9]])
+el1 = numpy.array([[297731.8,6181416.4], [297735.1,6181418.3]])
+culvert = anuga.Boyd_box_operator(domain,
+    losses=losses,
+    width=1.5,
+    height=1.5,
     exchange_lines=[el0,el1],
     use_momentum_jet=True, #False to switch it off
     use_velocity_head=True, #False to switch it off
     manning=0.013, #culvert manning's n
     logging=True, #False to switch it off
-    label='culvert_log_file', 
-    verbose=False)  
+    label='culvert_log_file',
+    verbose=False)
 \end{verbatim}
 
 \begin{verbatim}
 #------------------------------------- ------------------
-# Pipe Culvert modelled with a single point 
+# Pipe Culvert modelled with a single point
 #------------------------------------- ------------------
-losses = {'inlet':0.5, 'outlet':1.0, 'bend':0.0, 'grate':0.0, 'pier': 0.0, 'other': 0.0} 
-ep0 = numpy.array([296653.0,6180014.9]) 
-ep1 = numpy.array([296642.5,6180036.3])      
-culvert = anuga.Boyd_pipe_operator(domain, 
-    losses=losses, 
-    diameter=1.5, 
-    end_points=[ep0, ep1], 
+losses = {'inlet':0.5, 'outlet':1.0, 'bend':0.0, 'grate':0.0, 'pier': 0.0, 'other': 0.0}
+ep0 = numpy.array([296653.0,6180014.9])
+ep1 = numpy.array([296642.5,6180036.3])
+culvert = anuga.Boyd_pipe_operator(domain,
+    losses=losses,
+    diameter=1.5,
+    end_points=[ep0, ep1],
     use_momentum_jet=True, #False to switch it off
     use_velocity_head=True, #False to switch it off
     manning=0.013, #culvert manning's n
     logging=True, #False to switch it off
-    label='culvert_log_file', 
-    verbose=False) 
+    label='culvert_log_file',
+    verbose=False)
 \end{verbatim}
 
 \section{User developed operators}
@@ -3124,13 +3124,13 @@ class My_operator(Operator):
 	  """
 
         Operator.__init__(self, domain, description, label, logging, verbose)
-       
+
         self.rate = rate
 
 
     def __call__(self):
         """
-        Apply rate to all triangles 
+        Apply rate to all triangles
         """
 
         timestep = self.domain.get_timestep()
@@ -3138,7 +3138,7 @@ class My_operator(Operator):
         self.stage_c[:] = self.stage_c[:]  + self.rate*timestep
 \end{verbatim}
 
-And then in your script you would asosciated \code{My_operator} with the \code{domain} with a call 
+And then in your script you would asosciated \code{My_operator} with the \code{domain} with a call
 \begin{verbatim}
 My_operator(domain,rate=1.0)
 \end{verbatim}
@@ -3265,9 +3265,9 @@ time, Q = get_flow_through_cross_section(filename, cross_section)
 %=================================
 \chapter{Parallel Simulation}
 
-The examples from the previous chapters were run just using one processor. As you will have noticed, the simulations can take a long time to run, especially if you are using a fine mesh. Indeed as you halve the spacing of the mesh, the number of triangles goes up by a factor of 4 and the timestep halves, so generally halving the spacing of the mesh increases the run time by approximately a factor of 8. 
+The examples from the previous chapters were run just using one processor. As you will have noticed, the simulations can take a long time to run, especially if you are using a fine mesh. Indeed as you halve the spacing of the mesh, the number of triangles goes up by a factor of 4 and the timestep halves, so generally halving the spacing of the mesh increases the run time by approximately a factor of 8.
 
-One way to alleviate this is to run your simulation in parallel and use more processors to spread the computational cost. 
+One way to alleviate this is to run your simulation in parallel and use more processors to spread the computational cost.
 
 
 \anuga has the option of running in parallel using \mpi. A description of the method used to parallelize \anuga is given in section~\ref{theory:parallel}.
@@ -3277,12 +3277,12 @@ Such jobs are run using the command
 \begin{verbatim}
 mpirun -np n python runscript.py
 \end{verbatim}
-where \code{n} is the total number of processors being used for the parallel run. 
+where \code{n} is the total number of processors being used for the parallel run.
 
-Essentially we can expect speedups comparable to the number of cores available. This is measured via scalability. Our current experiments have demonstrated a scalability of 70\% or above when the number of processors are chosen so that the local partitioned meshes contain around 2000 triangles. 
+Essentially we can expect speedups comparable to the number of cores available. This is measured via scalability. Our current experiments have demonstrated a scalability of 70\% or above when the number of processors are chosen so that the local partitioned meshes contain around 2000 triangles.
 
-For instance, suppose we have a problem with a mesh of 500,000 triangles, and use 250 processors. Then the mesh will be partitioned into sub meshes of approximately 2000 triangles. 
-We would expect 70\% scalability, and so expect a speedup of $250 \times 0.7 = 175$. 
+For instance, suppose we have a problem with a mesh of 500,000 triangles, and use 250 processors. Then the mesh will be partitioned into sub meshes of approximately 2000 triangles.
+We would expect 70\% scalability, and so expect a speedup of $250 \times 0.7 = 175$.
 
 \section{The Code}
 
@@ -3293,7 +3293,7 @@ Here is the code for \file{runParallelCairns.py} which is found in the \file{exa
 
 \section{Structure of the Code}
 
-The code is very similar to the sequential code. The same procedures are used to setup the domain, setup the inital conditions, boundary conditions and evolve. 
+The code is very similar to the sequential code. The same procedures are used to setup the domain, setup the inital conditions, boundary conditions and evolve.
 
 
 We first import a few procedures  need for the parallel code.
@@ -3301,9 +3301,9 @@ We first import a few procedures  need for the parallel code.
 from anuga import distribute, myid, numprocs, finalize, barrier
 \end{verbatim}
 
-\code{myid} returns the id of the current processor running the code. 
+\code{myid} returns the id of the current processor running the code.
 
-\code{numprocs} returns the total number of processors involved in this parallel jobs (the \code{n} in the original \code{mpirun} command. 
+\code{numprocs} returns the total number of processors involved in this parallel jobs (the \code{n} in the original \code{mpirun} command.
 
 \code{finalize} is called at the end of a script to close down the parallel job.
 
@@ -3320,15 +3320,15 @@ The creation of the \code{domain} is only done on processor 0. Hence we have the
 #-------------------------------------
 # Do the domain creation on processor 0
 #-------------------------------------
-if myid == 0: 
+if myid == 0:
     ....
     domain = ...
-	
+
 else:
     domain = None
 \end{verbatim}
 
-We only need to create the original domain on one processor, otherwise we will have multiple copies of the full domain (which will easily eat up our memory). 
+We only need to create the original domain on one processor, otherwise we will have multiple copies of the full domain (which will easily eat up our memory).
 
 Once we have our code{domain} setup we partition it and send the partitions to each of the other processors, via the command
 
@@ -3339,21 +3339,21 @@ Once we have our code{domain} setup we partition it and send the partitions to e
 domain = distribute(domain)
 \end{verbatim}
 
-This takes the \code{domain} on processor 0 and distributes that domain to each of the processors, (it overwrites the full domain on processor 0).  From this point of the code, there is a different domain on each processor, with each domain comunicating with the other domains to ensure required transfer of inforation to allow flow over the combined domains. 
+This takes the \code{domain} on processor 0 and distributes that domain to each of the processors, (it overwrites the full domain on processor 0).  From this point of the code, there is a different domain on each processor, with each domain comunicating with the other domains to ensure required transfer of inforation to allow flow over the combined domains.
 
 It is important to apply the boundary conditions after the \code{distribute}
 
 
 
-As the partitoined domain evolve, they will store their data to individual sww files, named as \code{domain_name_Pn_m.sww}, where \code{n} is the total number of processors being used and \code{m} is the specific processor id. 
+As the partitoined domain evolve, they will store their data to individual sww files, named as \code{domain_name_Pn_m.sww}, where \code{n} is the total number of processors being used and \code{m} is the specific processor id.
 
-We have a procedure to merge these individual sww files via the command 
+We have a procedure to merge these individual sww files via the command
 
 \begin{verbatim}
 domain.sww_merge()
 \end{verbatim}
 
-And we close down the parallel job by issuing the command 
+And we close down the parallel job by issuing the command
 
 \begin{verbatim}
 finalize()
@@ -3363,9 +3363,9 @@ finalize()
 %=================================
 \chapter{Checkpointing}
 
-When running large and long running simulations, it is useful to provide a mechanism to allow the simulation to restarted if it is interrupted mid simulation. Maybe there is a power cut, or when using batch queues there may be a time restriction on the length of any one running job. Then the use of checkpointing becomes useful. 
+When running large and long running simulations, it is useful to provide a mechanism to allow the simulation to restarted if it is interrupted mid simulation. Maybe there is a power cut, or when using batch queues there may be a time restriction on the length of any one running job. Then the use of checkpointing becomes useful.
 
-The idea is that at regular intervals the system makes a copy of the current state of the computation. Then if there is an interruption the computation can be started from the last checkpoint time and not original start time. 
+The idea is that at regular intervals the system makes a copy of the current state of the computation. Then if there is an interruption the computation can be started from the last checkpoint time and not original start time.
 
 \section{The Code}
 
@@ -3375,16 +3375,16 @@ Here is the code for \file{runCheckpoint.py}:
 
 \section{Structure of the Code}
 
-As usual the code needs to import the required modules, and setup parameters and in this case procedures for setting up the stage and elevation. 
+As usual the code needs to import the required modules, and setup parameters and in this case procedures for setting up the stage and elevation.
 
-Then we use a \code{try: except:} statement, where we try to open any appropriate checkpoint files, and if not successful, create and distribute a domain as usual. In the creation of the domain, we setup checkpointing just before we start the evolve loop. 
+Then we use a \code{try: except:} statement, where we try to open any appropriate checkpoint files, and if not successful, create and distribute a domain as usual. In the creation of the domain, we setup checkpointing just before we start the evolve loop.
 
 
 \begin{verbatim}
-try:	
+try:
     from anuga import load_checkpoint_file
-	
-    domain = load_checkpoint_file(domain_name = domain_name, 
+
+    domain = load_checkpoint_file(domain_name = domain_name,
                                   checkpoint_dir = checkpoint_dir)
 except:
     # create the domain as usual
@@ -3398,7 +3398,7 @@ When the domain is originally created, we need to setup checkpointing via the co
         domain.set_checkpointing(checkpoint_time = 5)
 \end{verbatim}
 
-Here we are setting the wall time between saving of checkpoint files to 5 sec (this is just for testing). Normally we would set the checkpointing to something large, say 15 minutes for a run of multiple hours. 
+Here we are setting the wall time between saving of checkpoint files to 5 sec (this is just for testing). Normally we would set the checkpointing to something large, say 15 minutes for a run of multiple hours.
 
 
 
@@ -3440,9 +3440,9 @@ documentation up to your web browser:
 2. Start the python documentation server with \code{pydoc -p 6767}
 3. Open a browser and type in \code{http://localhost:6767/}
 
-Now you have a real-time programmers' guide for \anuga, and an easy way to find 
+Now you have a real-time programmers' guide for \anuga, and an easy way to find
 the functions you are interested in. Pydoctor and other Python doc generators
-look nicer and have graphs, etc, but pydoc works straight out of the box. 
+look nicer and have graphs, etc, but pydoc works straight out of the box.
 
 \section{Public vs Private Interface}\index{public vs private interface}
 
@@ -3504,7 +3504,7 @@ and are omitted from the descriptions given below:
 %\begin{tabular}{ll}
 \begin{tabular}{p{2.0cm} p{14.0cm}}
   \emph{use\_cache} & Specifies whether caching is to be used for improved performance. See Section \ref{sec:caching} for details\\
-                    & on the underlying caching functionality\\                      
+                    & on the underlying caching functionality\\
   \emph{verbose}    & If \code{True}, provides detailed terminal output to the user\\
 \end{tabular}
 
@@ -3692,33 +3692,33 @@ and are omitted from the descriptions given below:
 %  \code{enquiry_point0}:
 %
 % \code{enquiry_point1}:
-% 
+%
 % \code{type}: (default is 'box')
-% 
+%
 % \code{width}:
 %
 %  \code{height}:
-% 
+%
 % \code{length}:
 %
 %  \code{number_of_barrels}: Number of identical pipes in the culvert (default is 1)
-% 
+%
 % \code{trigger_depth}: (default is 0.01)
 %
 %  \code{manning}: Mannings Roughness for Culvert
-% 
+%
 % \code{sum_loss}:
-% 
+%
 % \code{use_velocity_head}:
 %
 %  \code{use_momentum_jet}:
-% 
+%
 %   \code{label}: Short text naming the culvert
 %
 %  \code{description}: Text describing the culvert
 %
 %    \code{update_interval}:
-% 
+%
 % \code{log_file}:
 %
 %  \code{discharge_hydrograph}:
@@ -3890,7 +3890,7 @@ It contains, in addition to dimension information, the following
 variables:
 \begin{itemize}
   \item \code{x} and \code{y}: coordinates of the points, represented as numeric arrays
-  \item \code{permutation}: Original indices of the points as specified by the optional \code{ordering_file} 
+  \item \code{permutation}: Original indices of the points as specified by the optional \code{ordering_file}
                             (see the function \code{urs2sts()} in Section \ref{sec:basicfileconversions})
   \item \code{elevation}: a numeric array storing bed-elevations
     % Refer here to the example to be provided in describing the simple example
@@ -4015,7 +4015,7 @@ with the default being 3.
 
 The $easting$ and $northing$ values are used if the user wishes to determine the output
 within a specified rectangular area. The \code{reduction} input refers to a function
-to reduce the quantities over all time step of the SWW file, e.g.\ maximum, or an index referring 
+to reduce the quantities over all time step of the SWW file, e.g.\ maximum, or an index referring
 to a time-step to extract a time-slice of data.
 
 \end{funcdesc}
@@ -4040,7 +4040,7 @@ to a time-step to extract a time-slice of data.
   The optional filename \code{ordering\_filename} specifies the permutation of indices
   of points to select along with their longitudes and latitudes. This permutation will also be
   stored in the STS file. If absent, all points are taken and the permutation will be trivial,
-  i.e.\ $0, 1, \ldots, N-1$, where $N$ is the total number of points stored.  
+  i.e.\ $0, 1, \ldots, N-1$, where $N$ is the total number of points stored.
 \end{funcdesc}
 
 \begin{funcdesc}{csv2building\_polygons}{file\_name, floor\_height=3}
@@ -4048,7 +4048,7 @@ to a time-step to extract a time-slice of data.
 
   Convert CSV files of the form:
 
-  \begin{verbatim} 
+  \begin{verbatim}
 easting,northing,id,floors
 422664.22,870785.46,2,0
 422672.48,870780.14,2,0
@@ -4063,9 +4063,9 @@ easting,northing,id,floors
   \end{verbatim}
 
   to a dictionary of polygons with \code{id} as key.
-  The associated number of \code{floors} are converted to m above MSL and 
+  The associated number of \code{floors} are converted to m above MSL and
   returned as a separate dictionary also keyed by \code{id}.
-    
+
   Optional parameter \code{floor_height} is the height of each building story.
 
   These can e.g.\ be converted to a \code{Polygon_function} for use with \code{add_quantity}
@@ -4264,26 +4264,26 @@ particular interest.
 
 The equations constituting the finite-volume method are obtained by
 integrating the differential conservation equations over each
-triangular cell of the mesh. 
+triangular cell of the mesh.
 
 Introducing some notation we use $i$ to
 refer to the $i$-th triangular cell $T_i$, and $N_i$ to the
 set of indices $j$ referring to cells neighbouring the $i$-th cell.
-Also let $A_i$ be the area of the $i$-th triangular cell, $e_{ij}$ the edge between the 
- $i$-th and $j$-th  cells, and $l_{ij}$ 
-the length of the edge $e_{ij}$. Then integrating 
+Also let $A_i$ be the area of the $i$-th triangular cell, $e_{ij}$ the edge between the
+ $i$-th and $j$-th  cells, and $l_{ij}$
+the length of the edge $e_{ij}$. Then integrating
 
 \[
 \int_{T_i} \frac{\partial \UU}{\partial t} \ d\xx + \int_{T_i} \left( \frac{\partial \EE}{\partial
-x}+\frac{\partial \GG}{\partial y} \right)  \ d\xx =  \int_{T_i} \SSS   \ d\xx 
+x}+\frac{\partial \GG}{\partial y} \right)  \ d\xx =  \int_{T_i} \SSS   \ d\xx
 \]
 
-By an application of the divergence theorem, we obtain an equation for each cell $T_i$ 
+By an application of the divergence theorem, we obtain an equation for each cell $T_i$
 which describes the rate of change of the average of the
 conserved quantities within each cell, in terms of the fluxes across
 the edges of the cells and the effect of the source terms.
 \[
- \frac{d }{d t} \frac1{A_i} \int_{T_i}  \UU \ d\xx +  \frac1{A_i}  \sum_{j \in N_i} \int_{e_{ij}}  (\EE,  \GG) \cdot \nn  \ ds =  \frac1{A_i} \int_{T_i} \SSS   \ d\xx 
+ \frac{d }{d t} \frac1{A_i} \int_{T_i}  \UU \ d\xx +  \frac1{A_i}  \sum_{j \in N_i} \int_{e_{ij}}  (\EE,  \GG) \cdot \nn  \ ds =  \frac1{A_i} \int_{T_i} \SSS   \ d\xx
 \]
 So the rate equations associated with average of each cell have the form
 \[
@@ -4292,7 +4292,7 @@ So the rate equations associated with average of each cell have the form
 where
 \begin{itemize}
   \item $\UU_i$ the vector of conserved quantities averaged over the $i$th cell, $\frac1{A_i} \int_{T_i}  \UU \ d\xx $,
-  \item $\SSS_i$ is the average of the source term associated with the $i$th cell, $\frac1{A_i} \int_{T_i} \SSS   \ d\xx$, 
+  \item $\SSS_i$ is the average of the source term associated with the $i$th cell, $\frac1{A_i} \int_{T_i} \SSS   \ d\xx$,
    \item $l_{ij}$ is the length of the edge $e_{ij}$, and
   \item $\HH_{ij} l_{ij}$ an approximation of the outward normal flux of material across the \textit{ij}th edge, $\int_{e_{ij}}  (\EE,  \GG) \cdot \nn  \ ds$.
 \end{itemize}
@@ -4309,26 +4309,26 @@ T_i$ for each cell.  The slope of this function is limited to avoid
 artificially introduced oscillations.
 This
 function is allowed to be discontinuous across the edges of the
-cells. The reconstructed quantities in the $i$-th cell is denoted $\UU_i(\xx)$. 
+cells. The reconstructed quantities in the $i$-th cell is denoted $\UU_i(\xx)$.
 The values on either side of an edge are denoted
 \[
 \UU^i_{ij}  = \lim_{\xx \rightarrow m_{ij}}  \UU_i(\xx) \quad\text{and}\quad
 \UU^j_{ij}  = \lim_{\xx \rightarrow m_{ij}}  \UU_j(\xx) .
 \]
 
-The flux in the direction $\nn$, is given by 
+The flux in the direction $\nn$, is given by
 \[
 \HH(\UU)  = \EE(\UU) n_1 + \GG(\UU) n_2 .
 \]
-The numerical scheme is obtained by approximating the flux $\HH$ using a numerical flux function. 
+The numerical scheme is obtained by approximating the flux $\HH$ using a numerical flux function.
 Godunov's method (see \cite{Toro1992}) involves calculating the
 numerical flux function by exactly
 solving the corresponding one dimensional Riemann problem normal to
-the edge. A much simpler approximation is the  central-upwind scheme 
+the edge. A much simpler approximation is the  central-upwind scheme
 of \cite{KurNP2001} which is given by
 \[
 \HH_{ij} = \frac{a^+_{ij}  \HH(\UU^i_{ij}) - a^-_{ij}\HH(\UU^j_{ij}) }
-{a^+_{ij} - a^-_{ij}} 
+{a^+_{ij} - a^-_{ij}}
 + \frac{a^+_{ij}  a^-_{ij}} {a^+_{ij} - a^-_{ij}} \left[ \UU^j_{ij} - \UU^i_{ij}\right]
 \]
 with bounds on wave speeds given by
@@ -4349,7 +4349,7 @@ For stability of the method, it is necessary that the timestep satisfy the Coura
 $
   \Delta t \le \min_{i}  \min_{j\in N_i} \left( \frac{r_i}{a_{ij}}, \frac{r_j}{a_{ij}} \right )
 $
-where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of the inscribed circle of the $i$-th cell. 
+where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of the inscribed circle of the $i$-th cell.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4374,7 +4374,7 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 	\coordinate (H) at (1.5,1.5);
 	\coordinate (I) at (0.25,1.6);
 	\coordinate (J) at (-1.0,1.5);
-	
+
 	\node (ABC) at ($1/3*(A) + 1/3*(B) + 1/3*(C)$) {$0$};
 	\node (BCD) at ($1/3*(B) + 1/3*(C) + 1/3*(D)$) {$1$};
 	\node (BDF) at ($1/3*(B) + 1/3*(D) + 1/3*(F)$) {$2$};
@@ -4385,11 +4385,11 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 	\node (FIB) at ($1/3*(F) + 1/3*(I) + 1/3*(B)$) {$7$};
 	\node (BIJ) at ($1/3*(B) + 1/3*(I) + 1/3*(J)$) {$8$};
 	\node (BJA) at ($1/3*(B) + 1/3*(J) + 1/3*(A)$) {$9$};
-	
-	
+
+
 	%\node at (A) [circle,draw,fill,white] {0};
-	
-	
+
+
 	\draw (A) to (B) ;
 	\draw (B) -- (C) ;
 	\draw (C) -- (A) ;
@@ -4409,7 +4409,7 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 	\draw (I) -- (J) ;
 	\draw (B) -- (J);
 	\draw (J) -- (A);
-	
+
 \end{scope}
 
 \draw [->] (-1.3,-1.1) to (-1.85,-1.85);
@@ -4426,7 +4426,7 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 	\coordinate (H) at (1.5,1.5);
 	\coordinate (I) at (0.25,1.6);
 	\coordinate (J) at (-1.0,1.5);
-	
+
 	\node (ABC) at ($1/3*(A) + 1/3*(B) + 1/3*(C)$) {$0$};
 	\node (BCD) at ($1/3*(B) + 1/3*(C) + 1/3*(D)$) {$1$};
 	\node (BDF) at ($1/3*(B) + 1/3*(D) + 1/3*(F)$) {$2$};
@@ -4437,11 +4437,11 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 	\node (FIB) at ($1/3*(F) + 1/3*(I) + 1/3*(B)$) {$5$};
 	\node (BIJ) at ($1/3*(B) + 1/3*(I) + 1/3*(J)$) {$3$};
 	\node (BJA) at ($1/3*(B) + 1/3*(J) + 1/3*(A)$) {$4$};
-	
-	
+
+
 	%\node at (A) [circle,draw,fill,white] {0};
-	
-	
+
+
 	\draw (A) to (B) ;
 	\draw (B) -- (C) ;
 	\draw (C) -- (A) ;
@@ -4461,7 +4461,7 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 	\draw (I) -- (J) ;
 	\draw (B) -- (J);
 	\draw (J) -- (A);
-	
+
 \end{scope}
 
 \begin{scope}[yshift=-100.0, xshift=75.0]
@@ -4475,7 +4475,7 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 	\coordinate (H) at (1.5,1.5);
 	\coordinate (I) at (0.25,1.6);
 	\coordinate (J) at (-1.0,1.5);
-	
+
 	%\node (ABC) at ($1/3*(A) + 1/3*(B) + 1/3*(C)$) {$0$};
 	%\node (BCD) at ($1/3*(B) + 1/3*(C) + 1/3*(D)$) {$1$};
 	\node (BDF) at ($1/3*(B) + 1/3*(D) + 1/3*(F)$) {$5$};
@@ -4486,11 +4486,11 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 	\node (FIB) at ($1/3*(F) + 1/3*(I) + 1/3*(B)$) {$4$};
 	\node (BIJ) at ($1/3*(B) + 1/3*(I) + 1/3*(J)$) {$6$};
 	%\node (BJA) at ($1/3*(B) + 1/3*(J) + 1/3*(A)$) {$9$};
-	
-	
+
+
 	%\node at (A) [circle,draw,fill,white] {0};
-	
-	
+
+
 	%\draw (A) to (B) ;
 	%\draw (B) -- (C) ;
 	%\draw (C) -- (A) ;
@@ -4510,7 +4510,7 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 	\draw [dashed] (I) -- (J) ;
 	\draw [dashed] (B) -- (J);
 	%\draw (J) -- (A);
-	
+
 \end{scope}
 
 
@@ -4522,7 +4522,7 @@ where $a_{ij} = \max \{ a_{ij}^+, -a_{ij}^- \} $ and $r_i$  is the radius  of th
 \end{center}
  \end{figure}
 
-Currently \anuga uses a simple domain decomposition technique to parallelize the code. 
+Currently \anuga uses a simple domain decomposition technique to parallelize the code.
 The first step is to subdivide the mesh
 into, roughly, equally sized partitions. On a rectangular mesh this may be
 done by a simple co-ordinate based dissection method, but on  complicated
@@ -4548,24 +4548,24 @@ A typical timestep consists of the following computational steps:
 compute_fluxes()  # Compute  H_ij across each edge
 compute_forcing_terms() # Compute S_i
 update_timestep() # Communication a global timestep
-update_conserved_quantities() 
+update_conserved_quantities()
 update_ghosts()   # Communicate cell values to neighbouring processors
 \end{verbatim}
 %\end{lstlisting}
 
-The \code{compute\_fluxes()} step is the most computationally intensive, consisting of iterating through all the cells or edges and accumulating, for each cell,  the fluxes along each edge.  This step itself consist of a number of calls to \Python{} routines. 
+The \code{compute\_fluxes()} step is the most computationally intensive, consisting of iterating through all the cells or edges and accumulating, for each cell,  the fluxes along each edge.  This step itself consist of a number of calls to \Python{} routines.
 
 
-There are two communications steps, 
+There are two communications steps,
 \begin{enumerate}[(1)]
 \item  \code{update\_timestep()} which involves a \code{MPI\_Allreduce} to find a global timestep for the scheme based on a CFL condition,
 
-\item \code{update\_ghosts()} where at present we use the asynchronous  \MPI{}  calls, where we initiate all the  \code{ MPI\_Irecv} first and then the corresponding \code{ MPI\_Isend} calls are made.  Finally the communication is resolved via a call to \code{MPI\_Waitall}. 
+\item \code{update\_ghosts()} where at present we use the asynchronous  \MPI{}  calls, where we initiate all the  \code{ MPI\_Irecv} first and then the corresponding \code{ MPI\_Isend} calls are made.  Finally the communication is resolved via a call to \code{MPI\_Waitall}.
 
-The use of these asynchronous \MPI{} calls produced a great improvement in scalability of our code, jumping from modest results for 32 - 64 \MPI{} processes up to 90\% efficiency for larger problems with 100s to 1000s of \MPI{} processes. There is still an opportunity to improve efficiency by overloading communication in  \code{update\_ghosts()} with computation in \code{compute\_fluxes()} which we will investigate in future. 
+The use of these asynchronous \MPI{} calls produced a great improvement in scalability of our code, jumping from modest results for 32 - 64 \MPI{} processes up to 90\% efficiency for larger problems with 100s to 1000s of \MPI{} processes. There is still an opportunity to improve efficiency by overloading communication in  \code{update\_ghosts()} with computation in \code{compute\_fluxes()} which we will investigate in future.
 \end{enumerate}
 
-In Figure~\ref{fig:speedup} we present experiments demonstrating the typical speedups for problems running from 43,200 triangles to 2,349,353 triangles. The results demonstrate super scalability for the larger problems stemming from better cache utilization for those problems based on the simple observation that the sub divided meshes can fit in the cache in those cases. 
+In Figure~\ref{fig:speedup} we present experiments demonstrating the typical speedups for problems running from 43,200 triangles to 2,349,353 triangles. The results demonstrate super scalability for the larger problems stemming from better cache utilization for those problems based on the simple observation that the sub divided meshes can fit in the cache in those cases.
 
 These experiments were conducted on a Fujitsu PRIMERGY cluster consisting of 36 BX920 S2 blades, each blade consisting of 2 Intel Xeon X5670 CPUs
 (Westmere, 6 core, 2.934 GHz) for a total of 432 cores.
@@ -4593,7 +4593,7 @@ These experiments were conducted on a Fujitsu PRIMERGY cluster consisting of 36 
 %
 %\pgfplotstabletypeset[columns={N1, S1, S2, S3, S4, S5, I, H},
 %                               columns/N1/.style={
-%                                     column name=$np$,fixed}                                                                           
+%                                     column name=$np$,fixed}
 %                                     ]{speedup.dat}
 %\end{center}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -4602,7 +4602,7 @@ These experiments were conducted on a Fujitsu PRIMERGY cluster consisting of 36 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[h]
 \begin{center}
-\begin{tikzpicture}[scale=1,auto] 
+\begin{tikzpicture}[scale=1,auto]
 \begin{loglogaxis} [
   ylabel=Speedup,
   xlabel=Number of cores,
@@ -4623,16 +4623,16 @@ These experiments were conducted on a Fujitsu PRIMERGY cluster consisting of 36 
 (512, 21.333333	)
  };
 
-\addplot coordinates { 
+\addplot coordinates {
 (12,	1)
 (24,	2.0473320158)
 (48,	3.2227407062)
 (96,	3.9844230769)
 (192,	3.9270280516)
 (384,	4.1612773649)
-(432,	4.0577751665) 
- }; 
- 
+(432,	4.0577751665)
+ };
+
  \addplot coordinates {
 (12,	1)
 (24,	2.0768268464)
@@ -4685,7 +4685,7 @@ These experiments were conducted on a Fujitsu PRIMERGY cluster consisting of 36 
 2{,}349{,}353 triangles,%
 }
 
- \end{loglogaxis} 
+ \end{loglogaxis}
  \end{tikzpicture}
 \caption{Speedups for problems ranging from 43,200 triangles to 2,349,353 triangles showing excellent speedups for the larger problems. We surmise  that the super-scalability stems from better cache utilization as the larger meshes are subdivided into smaller meshes that can fit into cache.}
  \label{fig:speedup}
@@ -4842,22 +4842,22 @@ $10^{-3}$. Setting
 provides a reasonable balance between accuracy and stability. In fact,
 setting $h=H_0$ will scale the predicted speed by a factor of $0.5$:
 \[
-  \left[ \frac{\mu}{h + h_0/h} \right]_{h = H_0} = 
-  \left[ \frac{\mu}{H_0 + H_0^2/H_0} \right] = 
-  \frac{\mu}{2 H_0} = \frac{\mu}{2 h} = \frac{u}{2} 
+  \left[ \frac{\mu}{h + h_0/h} \right]_{h = H_0} =
+  \left[ \frac{\mu}{H_0 + H_0^2/H_0} \right] =
+  \frac{\mu}{2 H_0} = \frac{\mu}{2 h} = \frac{u}{2}
 \]
 In general, for multiples of the minimal depth $N H_0$ one obtains
 \begin{equation}
   \left[ \frac{\mu}{h + h_0/h} \right]_{h = N H_0} =
-  \frac{\mu}{N H_0 + H_0/N} =   
-  \frac{\mu}{h (1 + 1/N^2)} 
-  \label{eq:flux limit multiple} 
-\end{equation} 
+  \frac{\mu}{N H_0 + H_0/N} =
+  \frac{\mu}{h (1 + 1/N^2)}
+  \label{eq:flux limit multiple}
+\end{equation}
 which converges quadratically to the true value with the multiple N.
 
-Although this equation can be used for any depth, we have restricted its use to depths less than $10 * H_0$ (or 1 cm) to computational resources.  
-According to Equation \ref{eq:flux limit multiple} this cutoff    
-affects the calculated velocity by less than 1 \%. 
+Although this equation can be used for any depth, we have restricted its use to depths less than $10 * H_0$ (or 1 cm) to computational resources.
+According to Equation \ref{eq:flux limit multiple} this cutoff
+affects the calculated velocity by less than 1 \%.
 
 %The developed numerical model has been applied to several test cases
 %as well as to real flows. numeric tests prove the robustness and accuracy of the model.
@@ -4985,32 +4985,32 @@ simulation should be started later than the beginning of some input data such as
 obtained from boundaries or forcing functions (hydrographs, file_boundary etc).
 
 The \code{domain.startime} may be adjusted in \code{file_boundary} in the case the
-input data does not itself start until a later time. 
+input data does not itself start until a later time.
 
- 
+
 \section{Spatial data}
 
 \subsection{Projection}
 All spatial data relates to the WGS84 datum (or GDA94) and assumes a projection
 into UTM with false easting of 500000 and false northing of
-1000000 on the southern hemisphere (0 on the northern hemisphere). 
+1000000 on the southern hemisphere (0 on the northern hemisphere).
 All locations must consequently be specified in Cartesian coordinates
 (eastings, northings) or (x,y) where the unit is metres.
-Alternative projections can be used, but \anuga does have the concept of a UTM zone 
+Alternative projections can be used, but \anuga does have the concept of a UTM zone
 that must be the same for all coordinates in the model.
 
 \subsection{Internal coordinates}
-It is important to realise that for numerical precision \anuga uses coordinates that are relative 
-to the lower left node of the rectangle containing the mesh ($x_{\mbox{min}}$, $y_{\mbox{min}}$). 
-This origin is referred to internally as \code{xllcorner}, \code{yllcorner} following the ESRI ASCII grid notation.  
-The SWW file format also includes \code{xllcorner}, \code{yllcorner} and any coordinate in the file should be adjusted 
+It is important to realise that for numerical precision \anuga uses coordinates that are relative
+to the lower left node of the rectangle containing the mesh ($x_{\mbox{min}}$, $y_{\mbox{min}}$).
+This origin is referred to internally as \code{xllcorner}, \code{yllcorner} following the ESRI ASCII grid notation.
+The SWW file format also includes \code{xllcorner}, \code{yllcorner} and any coordinate in the file should be adjusted
 by adding this origin. See Section \ref{sec:sww format}.
 
 Throughout the \anuga interface, functions have optional boolean arguments \code{absolute} which controls
-whether spatial data received is using the internal representation (\code{absolute=False}) or the 
+whether spatial data received is using the internal representation (\code{absolute=False}) or the
 user coordinate set (\code{absolute=True}). See e.g.\ \code{get_vertex_coordinates()} on \pageref{pg:get vertex coordinates}.
 
-DEMs, meshes and boundary conditions can have different origins. However, the internal representation in \anuga 
+DEMs, meshes and boundary conditions can have different origins. However, the internal representation in \anuga
 will use the origin of the mesh.
 
 \subsection{Polygons}
@@ -5122,7 +5122,7 @@ The output generated by \anuga may be viewed by
 means of the visualisation tool \code{anuga\_viewer}, which takes an
 SWW file generated by \anuga and creates a visual representation
 of the data. Examples may be seen in Figures \ref{fig:runupstart}
-and \ref{fig:runup2}. 
+and \ref{fig:runup2}.
 
 
 
@@ -5138,7 +5138,7 @@ We suggest installing from source if you are using Ubuntu (Linux generally).
 Install basic packages
 
 \begin{verbatim}
-sudo apt-get install build-essential libgdal-dev make git libopenscenegraph-dev  
+sudo apt-get install build-essential libgdal-dev make git libopenscenegraph-dev
 \end{verbatim}
 
 
@@ -5187,7 +5187,7 @@ printenv PATH
 
 
 Check the Installation.
-Change into the \verb anuga-viewer/data   directory and run the 
+Change into the \verb anuga-viewer/data   directory and run the
 \verb anuga_viewer   via the command
 
 \begin{verbatim}
@@ -5201,14 +5201,14 @@ Hopefully the viewer fires up and you will see a simple flow. Use the space bar 
 %==============================
 \subsection{Installing on Windows}
 
-A windows binary of the \code{anuga\_viewer} is available from 
+A windows binary of the \code{anuga\_viewer} is available from
 \url{http://sourceforge.net/projects/anuga/files/anuga_viewer_windows/}
 
-Extract the files to a folder and create a shortcut to the \code{anuga\_core} executable. 
+Extract the files to a folder and create a shortcut to the \code{anuga\_core} executable.
 Or set up a
 file association to make files with the extension \code{.sww} open
 with \code{anuga_viewer}. Alternatively, you can operate \code{anuga_viewer}
-from the command line if you setup the \code{PATH} to point to this folder. 
+from the command line if you setup the \code{PATH} to point to this folder.
 
 
 
@@ -5225,16 +5225,16 @@ from the command line if you setup the \code{PATH} to point to this folder.
  \code{anuga_viewer} executable file (or a shortcut to it), or set up a
  file association to make files with the extension \code{.sww} open
  with \code{anuga_viewer}. Alternatively, you can operate \code{anuga_viewer}
- from the command line via 
+ from the command line via
 \begin{verbatim}
 anuga_viewer <swwfile>
-\end{verbatim} 
+\end{verbatim}
 
 or if a georeferenced tif file (or jpg cut to the same shape as the domain) is needed
 
-\begin{verbatim} 
+\begin{verbatim}
 anuga_viewer <swwfile> <tif file>
-\end{verbatim} 
+\end{verbatim}
 
 
  Upon starting the viewer, you will see an interactive moving-picture
@@ -5259,8 +5259,8 @@ anuga_viewer <swwfile> <tif file>
  \end{center}
 
  % \vfill
- 
- 
+
+
 
  The following describes how to operate \code{anuga_viewer} from the command line:
 
@@ -5500,9 +5500,9 @@ regarded as inside or outside the polygon.  \code{True} means they are inside.
 \code{check_input} specifies whether the input parameters are checked -- \code{True}
 means check the input parameters.
 
-The function returns a tuple \code{(indices, count)} where \code{indices} is a list of 
+The function returns a tuple \code{(indices, count)} where \code{indices} is a list of
 point $indices$ from the input \code{points} list, with the indices of points inside the
-polygon at the left and indices of points outside the polygon listed at the right.  The 
+polygon at the left and indices of points outside the polygon listed at the right.  The
 \code{count} value is the count (from the left) of the indices of the points $inside$ the
 polygon.
 \end{funcdesc}
@@ -5614,13 +5614,13 @@ Export a CSV or PTS points data file from a \code{Geospatial_data} object.
 
 \code{file_name} is the path to the CSV or PTS points file to write.
 
-\code{absolute} determines if the exported data is absolute or relative to the 
-\code{Geospatial_data} object geo_reference.  If \code{True} the exported 
+\code{absolute} determines if the exported data is absolute or relative to the
+\code{Geospatial_data} object geo_reference.  If \code{True} the exported
 data is absolute.
 
 \code{as_lat_long} exports the points data as latitudes and longitudes if \code{True}.
 
-\code{isSouthHemisphere} has effect only if \code{as_lat_long} is \code{True} and causes 
+\code{isSouthHemisphere} has effect only if \code{as_lat_long} is \code{True} and causes
 latitude/longitude values to be for the southern (\code{True}) or northern hemispheres
 (\code{False}).
 \end{methoddesc}
@@ -5632,15 +5632,15 @@ Module: \code{geospatial_data.geospatial_data}
 
 Get the coordinates for all the data points as an $N \times 2$ array.
 
-\code{absolute} determines if the exported data is absolute or relative to the 
-\code{Geospatial_data} object geo_reference.  If \code{True} the exported 
+\code{absolute} determines if the exported data is absolute or relative to the
+\code{Geospatial_data} object geo_reference.  If \code{True} the exported
 data is absolute.
 
 \code{geo_reference} is the geo_reference the points are relative to, if supplied.
 
 \code{as_lat_long} exports the points data as latitudes and longitudes if \code{True}.
 
-\code{isSouthHemisphere} has effect only if \code{as_lat_long} is \code{True} and causes 
+\code{isSouthHemisphere} has effect only if \code{as_lat_long} is \code{True} and causes
 latitude/longitude values to be for the southern (\code{True}) or northern hemispheres
 (\code{False}).
 \end{methoddesc}
@@ -5658,7 +5658,7 @@ Module: \code{geospatial_data.geospatial_data}
 
 Get a named attribute from a \code{Geospatial_data} object.
 
-\code{attribute_name} is the name of the desired attribute.  If \code{None}, return 
+\code{attribute_name} is the name of the desired attribute.  If \code{None}, return
 the default attribute.
 \end{methoddesc}
 
@@ -5803,7 +5803,7 @@ any input \code{mesh_file} value is ignored.
 \code{seed_num} is the random number generator seed to use.
 
 The function returns a tuple \code{(min_covar, alpha)} where \code{min_covar} is
-the minumum normalised covariance and \code{alpha} is the alpha value that 
+the minumum normalised covariance and \code{alpha} is the alpha value that
 created it.  A plot file is also written.
 
 This is an example of function usage: \nopagebreak
@@ -5996,85 +5996,85 @@ may be found in the module \module{utilities.numerical\_tools}:
 %more to come very soon
 
 %?% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%?% 
+%?%
 %?% \chapter{Modules available in \anuga}
-%?% 
-%?% 
+%?%
+%?%
 %?% %abstract_2d_finite_volumes
-%?% 
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.domain}}
 %?% Generic module for 2D triangular domains for finite-volume computations of conservation laws
 %?% \declaremodule[domain]{}{domain}
 %?% \label{mod:domain}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.ermapper_grids}}
 %?% \declaremodule[ermappergrids]{}{ermapper_grids}
 %?% \label{mod:ermapper_grids}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.general_mesh} }
 %?% \declaremodule[generalmesh]{}{general_mesh}
 %?% \label{mod:general_mesh}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.generic_boundary_conditions} }
 %?% \declaremodule[genericboundaryconditions]{}{generic_boundary_conditions}
 %?% \label{mod:generic_boundary_conditions}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.mesh_factory} }
 %?% \declaremodule[meshfactory]{}{mesh_factory}
 %?% \label{mod:mesh_factory}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.mesh_factory} }
 %?% \declaremodule[meshfactory]{}{mesh_factory}
 %?% \label{mod:mesh_factory}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.neighbour_mesh} }
 %?% \declaremodule[neighbourmesh]{}{neighbour_mesh}
 %?% \label{mod:neighbour_mesh}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.pmesh2domain} }
 %?% \declaremodule[pmesh2domain]{}{pmesh2domain}
 %?% \label{mod:pmesh2domain}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.quantity}}
 %?% \declaremodule{}{quantity}
 %?% \label{mod:quantity}
-%?% 
+%?%
 %?% \begin{verbatim}
 %?% Class Quantity - Implements values at each triangular element
-%?% 
+%?%
 %?% To create:
-%?% 
+%?%
 %?%    Quantity(domain, vertex_values)
-%?% 
+%?%
 %?%    domain: Associated domain structure. Required.
-%?% 
+%?%
 %?%    vertex_values: Nx3 array of values at each vertex for each element.
 %?%                   Default None
-%?% 
+%?%
 %?%    If vertex_values are None Create array of zeros compatible with domain.
 %?%    Otherwise check that it is compatible with dimenions of domain.
 %?%    Otherwise raise an exception
 %?% \end{verbatim}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.region} }
 %?% \declaremodule[region]{}{region}
 %?% \label{mod:region}
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{abstract_2d_finite_volumes.util} }
 %?% \declaremodule[util]{}{util}
 %?% \label{mod:util}
-%?% 
-%?% 
+%?%
+%?%
 %?% advection
 %?% alpha_shape
 %?% caching
@@ -6091,15 +6091,15 @@ may be found in the module \module{utilities.numerical\_tools}:
 %?% SConstruct
 %?% shallow_water
 %?% utilities
-%?% 
-%?% 
+%?%
+%?%
 %?% \section{\module{shallow\_water}}
-%?% 
+%?%
 %?% 2D triangular domains for finite-volume
 %?% computations of the shallow water wave equation.
 %?% This module contains a specialisation of class Domain from module domain.py consisting of methods specific to the Shallow Water
 %?% Wave Equation
-%?% 
+%?%
 %?% \declaremodule[shallowwater]{}{shallow\_water}
 %?% \label{mod:shallowwater}
 
